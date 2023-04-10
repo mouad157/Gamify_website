@@ -1,0 +1,24 @@
+{% extends 'mainpage/base.html' %}
+
+{% block content %}
+
+<div class="container mt-5">
+  <form class="form-signin" action='/signup' method="post">
+    {% csrf_token %}
+    <h1 class="h3 mb-3 font-weight-normal">Sign up</h1>
+    <label for="username" class="sr-only">Username</label>
+    <input type="text" id="username" name="username" class="form-control mb-2" placeholder="Username" required autofocus>
+    <label for="email" class="sr-only">Email</label>
+    <input type="email" id="email" name="email" class="form-control mb-2" placeholder="Email" required>
+    <label for="status" class="sr-only">Status</label>
+    <input type="text" id="status" name="status" class="form-control mb-2" placeholder="Client/User" required>
+    <label for="pass1" class="sr-only">Password</label>
+    <input type="password" id="pass1" name="pass1" class="form-control mb-2" placeholder="Password" required>
+    <label for="pass2" class="sr-only">Confirm Password</label>
+    <input type="password" id="pass2" name="pass2" class="form-control mb-2" placeholder="Confirm Password" required>
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Sign up</button>
+    <a class="btn btn-lg btn-danger btn-block" href="/">Cancel</a>
+  </form>
+</div>
+
+{% endblock %}

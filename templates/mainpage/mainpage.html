@@ -1,0 +1,163 @@
+{% extends 'mainpage/base.html' %}
+
+{% block content %}
+
+<html>
+    <div class="container mt-5">
+        {% if user.is_authenticated %}
+          <h1 class="text-center mb-4">Hello {{ username }}</h1>
+          <div class="text-center">
+            <button type="submit" class="btn btn-primary"><a href="/signout" class="text-white">Sign Out</a></button>
+          </div>
+        {% endif %}
+      </div>
+<body>
+    {% if type == 'user'%}
+        {% if tasks %}
+        <div class="container">
+            <div class="row">
+              <div class="col-md-6">
+                <h2>Perform Tasks</h2>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Task Title</th>
+                      <th scope="col">Priority</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in tasks %}
+                    {% if i.is_completed == False %}
+                    <tr>
+                      <td>{{ i.task_title }}</td>
+                      <td>{{ i.priority }}</td>
+                      <td>{{ i.quantity_left }}</td>
+                      <td>
+                        <a class="btn btn-primary" href="{% url 'task' i.id %}" role="button">Perform</a>
+                      </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+              <div class="col-md-6">
+                <h2>Review Tasks</h2>
+                <table class="table table-striped">
+                  <thead>
+                    <tr>
+                      <th scope="col">Task Title</th>
+                      <th scope="col">Priority</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for i in tasks %}
+                    {% if i.quantity_done != 0 %}
+                    <tr>
+                      <td>{{ i.task_title }}</td>
+                      <td>{{ i.priority }}</td>
+                      <td>{{ i.quantity_done }}</td>
+                      <td>
+                        <a class="btn btn-primary" href="{% url 'review_task' i.id %}" role="button">Review</a>
+                      </td>
+                    </tr>
+                    {% endif %}
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <h2>Leaderboard</h2>
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th scope="col">Player</th>
+                  <th scope="col">Score</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for i in people %}
+                <tr>
+                  <td>{{ i.name }}</td>
+                  <td>{{ i.score }}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+          {%endif%}
+    {% endif %}
+    {% if type == 'client' %}
+    {% if tasks %}
+        <div class="container my-4">
+            <h4 class="text-center mb-4">Current Active Tasks</h4>
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col">Task Title</th>
+                        <th scope="col">Priority</th>
+                        <th scope="col">Quantity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for i in tasks %}
+                        {% if i.client.name == user %}
+                            {% if not i.is_completed %}
+                                <tr>
+                                    <td>{{ i.task_title }}</td>
+                                    <td>{{ i.priority }}</td>
+                                    <td>{{ i.quantity_left }}</td>
+                                </tr>
+                            {% endif %}
+                        {% endif %}
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% endif %}
+
+    <div class="container my-4">
+        <h4 class="text-center mb-4">Current Completed Tasks</h4>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th scope="col">Task Title</th>
+                    <th scope="col">Priority</th>
+                    <th scope="col">Quantity</th>
+                    <th scope="col">Download Results</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for i in tasks %}
+                    {% if i.client.name == user %}
+                        {% if i.is_completed %}
+                            <tr>
+                                <td>{{ i.task_title }}</td>
+                                <td>{{ i.priority }}</td>
+                                <td>{{ i.quantity_done }}</td>
+                                <td>
+                                    <button type="submit" class="btn btn-primary" href="{% url 'download_task' i.id %}">
+                                        <a href="{% url 'download_task' i.id %}" class="text-white">Download</a>
+                                    </button>
+                                </td>
+                            </tr>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+
+    <div class="container my-4">
+        <button type="submit" class="btn btn-success">
+            <a href="{% url 'add_task' %}" class="text-white">Add Task</a>
+        </button>
+    </div>
+{% endif %}  
+</body>
+</html>
+{% endblock %}

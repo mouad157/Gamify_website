@@ -1,0 +1,26 @@
+{% extends 'mainpage/base.html' %}
+{% block content %}
+  <div class="container">
+    <h1 class="mt-5 mb-4">Add a Task</h1>
+    <form method="post">
+      {% csrf_token %}
+      <div class="form-group">
+        {{ form.task_title.label_tag }}
+        {{ form.task_title }}
+      </div>
+      <div class="form-group">
+        {{ form.task_text.label_tag }}
+        {{ form.task_text }}
+      </div>
+      <div class="form-group">
+        {{ form.priority.label_tag }}
+        {{ form.priority }}
+      </div>
+      <div class="form-group">
+        Quantity
+        {{ form.quantity_left }}
+      </div>
+      <button type="submit" class="btn btn-primary">Save</button>
+    </form>
+  </div>
+{% endblock %}

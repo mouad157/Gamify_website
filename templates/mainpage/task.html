@@ -1,0 +1,23 @@
+{% extends 'mainpage/base.html' %}
+
+{% block content %}
+
+<html>
+    <body>
+{%if task%}
+<h1 class="title">{{task.task_title}}</h1>
+<p class="description">{{task.task_text}}</p>
+{%endif%}
+<div class="custom-file-upload">
+    <form method='POST' enctype="multipart/form-data">
+        {% csrf_token %}
+        {% for form in imageform %}
+            {{ form }}
+        {% endfor %}
+        <input type="submit" class="btn btn-secondary" name="submit" value="Submit">
+    </form>
+</div>
+</body>
+
+</html>
+{% endblock %}

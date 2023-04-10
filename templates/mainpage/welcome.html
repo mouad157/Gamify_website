@@ -1,0 +1,25 @@
+{% extends 'mainpage/base.html' %}
+
+{% block content %}
+<style>
+    /* Optional custom styles */
+    body {
+        padding: 50px;
+    }
+    button {
+        margin-top: 20px;
+        margin-right: 10px;
+    }
+</style>
+<body>
+    <div class="container">
+        <h1 class="text-center">Welcome to our app</h1>
+        <div class="d-flex justify-content-center">
+            <a href="/signin" class="btn btn-primary">Sign in</a>
+            <br/>
+            <a href="/signup" class="btn btn-secondary">Sign up</a>
+        </div>
+    </div>
+</body>
+
+{% endblock%}

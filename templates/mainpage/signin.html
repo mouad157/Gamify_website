@@ -1,0 +1,41 @@
+{% extends 'mainpage/base.html' %}
+
+{% block content %}
+    <form action='/signin' method='post' class="my-5">
+        {% csrf_token %}
+        <div class="container bg-light p-5 rounded-lg">
+            <h2 class="text-center mb-4">Sign In</h2>
+            <div class="form-group">
+                <label for="username">Username:</label>
+                <input type="text" class="form-control" id='username' name="username" placeholder="Enter Username" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email:</label>
+                <input type="text" class="form-control" id="email" name="email" placeholder="Enter Email" required>
+            </div>
+            <div class="form-group">
+                <label for="passw">Password:</label>
+                <input type="password" class="form-control" id='passw' name="passw" placeholder="Enter Password" required>
+            </div>
+            <div class="form-group">
+                <div class="form-check">
+                    <input type="checkbox" class="form-check-input" checked="checked" name="remember" id="remember">
+                    <label class="form-check-label" for="remember">Remember me</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-md-6 pr-md-1">
+                        <button type="submit" class="btn btn-primary btn-block">Sign In</button>
+                    </div>
+                    <div class="col-md-6 pl-md-1">
+                      <a href="/" class="btn btn-outline-secondary">Cancel</a>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <span class="psw">Forgot <a href="#">password?</a></span>
+            </div>
+        </div>
+    </form>
+{% endblock %}

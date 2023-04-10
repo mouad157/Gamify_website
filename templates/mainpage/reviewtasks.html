@@ -1,0 +1,43 @@
+{% extends 'mainpage/base.html' %}
+
+{% block content %}
+
+<html>
+    <body>
+{%if task%}
+<h1>{{task.task_title}}</h1>
+<p>{{task.task_text}}</p>
+{%endif%}
+<div class="table-responsive">
+<table class="table table-bordered table-striped">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Image</th>
+            <th scope='col'>Review</th>
+            <th scope="col">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for i in images%}
+        {% if i.task == task %}
+        {% if i.origin != user%}
+        {% if i.reviewed == False%}
+        <tr>
+            <td><img src='/media/{{i.image}}' class="img-thumbnail" /></td>
+            <form action ="/review_image/{{i.id}}/{{task.id}}/" method="post">
+            {% csrf_token %}
+            <td><input type='number' name="mark" id='mark' min ="0" max="10"></td>
+            <td><input type="submit" class="btn btn-primary" value="Review"></td>
+            </form>
+        </tr>
+        {% endif %}
+        {% endif %}
+        {% endif %}
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<a class="btn btn-lg btn-danger btn-block" href="/signin">Cancel</a>
+</body>
+</html>
+{% endblock %}
